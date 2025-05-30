@@ -552,7 +552,7 @@ whip_msg "Hora del cafe" \
 pacstrap_install
 
 # Creamos el fstab
-fstabgen -U /mnt >/mnt/etc/fstab
+genfstab -U /mnt >/mnt/etc/fstab
 
 # Montamos los directorios necesarios para el chroot
 for DIR in dev proc sys run; do

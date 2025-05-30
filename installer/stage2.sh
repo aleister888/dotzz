@@ -70,8 +70,8 @@ hostname_config() {
 
 # Activar repositorios de Arch Linux
 repos_conf() {
-	# Activar lib32
-	sed -i '/#\[lib32\]/{s/^#//;n;s/^.//}' /etc/pacman.conf && pacman -Sy
+	# Activar multilib
+	sed -i '/#\[multilib\]/{s/^#//;n;s/^.//}' /etc/pacman.conf && pacman -Sy
 
 	pacinstall reflector
 	cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
