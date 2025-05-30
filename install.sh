@@ -20,6 +20,7 @@ grep ubuntu /etc/pacman.d/gnupg/gpg.conf ||
 # - bc: para calcular el DPI de la pantalla
 # - git: para clonar el repositorio
 # - lvm2: para gestionar volúmenes lógicos
+sudo pacman -Sy
 sudo pacman -Sc --noconfirm
 #sudo pacman-key --populate && sudo pacman-key --refresh-keys
 sudo pacman -Sy --noconfirm --needed parted libnewt xkeyboard-config bc git lvm2
