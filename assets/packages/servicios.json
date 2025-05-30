@@ -25,8 +25,8 @@
   ],
   "firmware": [
     "gnome-firmware",
-    "world/fwupd",
-    "world/fwupd-efi"
+    "fwupd",
+    "fwupd-efi"
   ],
   "syslog-ng": [
     "hiredis",

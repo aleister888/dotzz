@@ -198,7 +198,7 @@ pacstrap_install() {
 	local PACSTRAP_PACKAGES
 
 	PACSTRAP_PACKAGES="base linux linux-firmware opendoas mkinitcpio"
-	PACSTRAP_PACKAGES+=" wget libnewt btrfs-progs neovim base-devel"
+	PACSTRAP_PACKAGES+=" wget libnewt btrfs-progs neovim base-devel lvm2"
 
 	PACSTRAP_PACKAGES+=" linux-headers libjpeg-turbo wpa_supplicant usbutils"
 	PACSTRAP_PACKAGES+=" networkmanager dosfstools git cronie cups freetype2"
