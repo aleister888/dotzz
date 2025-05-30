@@ -197,12 +197,12 @@ disk_setup() {
 pacstrap_install() {
 	local PACSTRAP_PACKAGES
 
-	PACSTRAP_PACKAGES="base linux linux-firmware opendoas mkinitcpio"
-	PACSTRAP_PACKAGES+=" wget libnewt btrfs-progs neovim base-devel lvm2"
+	PACSTRAP_PACKAGES="base linux linux-firmware linux-headers mkinitcpio"
+	PACSTRAP_PACKAGES+=" lvm2 wget libnewt btrfs-progs neovim base-devel"
 
-	PACSTRAP_PACKAGES+=" linux-headers libjpeg-turbo wpa_supplicant usbutils"
+	PACSTRAP_PACKAGES+=" libjpeg-turbo wpa_supplicant usbutils"
 	PACSTRAP_PACKAGES+=" networkmanager dosfstools git cronie cups freetype2"
-	PACSTRAP_PACKAGES+=" pciutils cryptsetup dialog efibootmgr grub acpid cryptsetup"
+	PACSTRAP_PACKAGES+=" pciutils cryptsetup dialog efibootmgr grub acpid"
 
 	# Instalamos pipewire para evitar conflictos (p.e. se isntala jack2 y no
 	# pipewire-jack). Los paquetes para 32 bits se instalarán una vez
@@ -274,8 +274,9 @@ kb_layout_conf() {
 		EndSection
 	EOF
 	# Si elegimos español, configurar el layout de la tty en español también
-	[ "$FINAL_LAYOUT" == "es" ] &&
-		sed -i 's|keymap="us"|keymap="es"|' /etc/conf.d/keymaps
+	# TODO
+	#[ "$FINAL_LAYOUT" == "es" ] &&
+	#	sed -i 's|keymap="us"|keymap="es"|' /etc/conf.d/keymaps
 }
 
 # Calcular el DPI
