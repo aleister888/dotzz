@@ -2,7 +2,7 @@
 
 set -e
 
-export REPO_NAME="dotz!"
+export REPO_NAME="dotzz"
 export REPO_URL="https://github.com/aleister888/$REPO_NAME"
 REPO_DIR="/tmp/$REPO_NAME"
 
@@ -21,7 +21,7 @@ grep ubuntu /etc/pacman.d/gnupg/gpg.conf ||
 # - git: para clonar el repositorio
 # - lvm2: para gestionar volúmenes lógicos
 sudo pacman -Sc --noconfirm
-sudo pacman-key --populate && sudo pacman-key --refresh-keys
+#sudo pacman-key --populate && sudo pacman-key --refresh-keys
 sudo pacman -Sy --noconfirm --needed parted libnewt xkeyboard-config bc git lvm2
 
 # Clonamos el repositorio solo si es necesario

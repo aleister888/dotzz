@@ -1,4 +1,4 @@
-<img src="https://artixlinux.org/img/artix-logo.png" align="left" height="90px" hspace="10px" vspace="0px">
+<img src="https://archlinux.org/static/logos/archlinux-logo-dark-90dpi.png" align="left" height="90px" hspace="10px" vspace="0px">
 
 ### dotzz
 
@@ -7,8 +7,8 @@
 Auto-instalador de Arch Linux con dwm, dmenu y mi configuración personal.
 
 <p float="center">
-<img src="https://raw.githubusercontent.com/aleister888/artix-installer/refs/heads/main/assets/screenshots/screenshot1.jpg" width="49%" />
-<img src="https://raw.githubusercontent.com/aleister888/artix-installer/refs/heads/main/assets/screenshots/screenshot2.jpg" width="49%" />
+<img src="https://raw.githubusercontent.com/aleister888/dotzz/refs/heads/main/assets/screenshots/screenshot1.jpg" width="49%" />
+<img src="https://raw.githubusercontent.com/aleister888/dotzz/refs/heads/main/assets/screenshots/screenshot2.jpg" width="49%" />
 </p>
 
 ---
@@ -18,7 +18,7 @@ Auto-instalador de Arch Linux con dwm, dmenu y mi configuración personal.
 - Ejecuta como root:
 
 ```bash
-bash <(curl https://raw.githubusercontent.com/aleister888/artix-installer/main/install.sh)
+bash <(curl https://raw.githubusercontent.com/aleister888/dotzz/main/install.sh)
 ```
 
 > [!NOTE]
