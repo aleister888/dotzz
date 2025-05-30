@@ -190,38 +190,38 @@ disk_setup() {
 	mount "/dev/$BOOT_PART" /mnt/boot
 }
 
-# Instalar paquetes con basestrap
-# Ejecutamos basestrap en un bucle hasta que se ejecute correctamente
+# Instalar paquetes con pacstrap
+# Ejecutamos pacstrap en un bucle hasta que se ejecute correctamente
 # porque el comando no tiene la opción --disable-download-timeout.
 # Lo que podría hacer que la operación falle con conexiones muy lentas.
-basestrap_install() {
-	local BASESTRAP_PACKAGES
+pacstrap_install() {
+	local PACSTRAP_PACKAGES
 
-	BASESTRAP_PACKAGES="base linux linux-firmware opendoas mkinitcpio"
-	BASESTRAP_PACKAGES+=" wget libnewt btrfs-progs neovim"
+	PACSTRAP_PACKAGES="base linux linux-firmware opendoas mkinitcpio"
+	PACSTRAP_PACKAGES+=" wget libnewt btrfs-progs neovim"
 
 	# Instalamos los paquetes del grupo base-devel manualmente para luego
 	# poder borrar sudo facilmente. (Si en su lugar instalamos el grupo,
 	# luego será más complicado desinstalarlo)
-	BASESTRAP_PACKAGES+=" autoconf automake bison debugedit fakeroot flex"
-	BASESTRAP_PACKAGES+=" gc gcc groff guile libisl libmpc libtool m4 make"
-	BASESTRAP_PACKAGES+=" patch pkgconf texinfo which"
+	PACSTRAP_PACKAGES+=" autoconf automake bison debugedit fakeroot flex"
+	PACSTRAP_PACKAGES+=" gc gcc groff guile libisl libmpc libtool m4 make"
+	PACSTRAP_PACKAGES+=" patch pkgconf texinfo which"
 
-	BASESTRAP_PACKAGES+=" linux-headers libjpeg-turbo wpa_supplicant usbutils"
-	BASESTRAP_PACKAGES+=" networkmanager dosfstools git cronie cups freetype2"
-	BASESTRAP_PACKAGES+=" pciutils cryptsetup dialog efibootmgr grub acpid cryptsetup"
+	PACSTRAP_PACKAGES+=" linux-headers libjpeg-turbo wpa_supplicant usbutils"
+	PACSTRAP_PACKAGES+=" networkmanager dosfstools git cronie cups freetype2"
+	PACSTRAP_PACKAGES+=" pciutils cryptsetup dialog efibootmgr grub acpid cryptsetup"
 
 	# Instalamos pipewire para evitar conflictos (p.e. se isntala jack2 y no
 	# pipewire-jack). Los paquetes para 32 bits se instalarán una vez
 	# activados el repo multilib de Arch Linux (s3)
-	BASESTRAP_PACKAGES+=" pipewire-pulse wireplumber pipewire pipewire-alsa"
-	BASESTRAP_PACKAGES+=" pipewire-audio pipewire-jack"
+	PACSTRAP_PACKAGES+=" pipewire-pulse wireplumber pipewire pipewire-alsa"
+	PACSTRAP_PACKAGES+=" pipewire-audio pipewire-jack"
 
 	# Instalamos go y sudo para poder compilar yay más adelante (s3)
-	BASESTRAP_PACKAGES+=" go sudo"
+	PACSTRAP_PACKAGES+=" go sudo"
 
 	# Para procesar los .json con los paquetes a instalar
-	BASESTRAP_PACKAGES+=" jq"
+	PACSTRAP_PACKAGES+=" jq"
 
 	# Añadimos el paquete con el microcódigo de CPU correspodiente
 	local MANUFACTURER
@@ -229,9 +229,9 @@ basestrap_install() {
 		grep vendor_id /proc/cpuinfo | awk '{print $3}' | head -1
 	)
 	if [ "$MANUFACTURER" == "GenuineIntel" ]; then
-		BASESTRAP_PACKAGES+=" intel-ucode"
+		PACSTRAP_PACKAGES+=" intel-ucode"
 	elif [ "$MANUFACTURER" == "AuthenticAMD" ]; then
-		BASESTRAP_PACKAGES+=" amd-ucode"
+		PACSTRAP_PACKAGES+=" amd-ucode"
 	fi
 
 	# Si el dispositivo tiene bluetooth, instalaremos blueman
@@ -239,12 +239,12 @@ basestrap_install() {
 		lspci
 		lsusb
 	)" | grep -i bluetooth; then
-		BASESTRAP_PACKAGES+=" blueman"
+		PACSTRAP_PACKAGES+=" blueman"
 	fi
 
 	# shellcheck disable=SC2086
 	while true; do
-		basestrap /mnt $BASESTRAP_PACKAGES && break
+		pacstrap /mnt $BASESTRAP_PACKAGES && break
 	done
 }
 
@@ -556,7 +556,7 @@ whip_msg "Hora del cafe" \
 	"El instalador ya tiene toda la información necesaria, puedes dejar el ordenador desatendido. La instalacion tomara 30-45min aproximadamente."
 
 # Instalamos paquetes en la nueva instalación
-basestrap_install
+pacstrap_install
 
 # Creamos el fstab
 fstabgen -U /mnt >/mnt/etc/fstab
