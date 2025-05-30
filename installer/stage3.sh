@@ -98,9 +98,6 @@ trash_dir() {
 # Instalamos yay (https://aur.archlinux.org/packages/yay)
 yay-install
 
-# Reemplamos sudo por doas
-sudo sudo2doas
-
 # Crear directorios
 for DIR in Documentos Música Imágenes Público Vídeos; do
 	mkdir -p "$HOME/$DIR"
