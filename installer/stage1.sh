@@ -198,14 +198,7 @@ pacstrap_install() {
 	local PACSTRAP_PACKAGES
 
 	PACSTRAP_PACKAGES="base linux linux-firmware opendoas mkinitcpio"
-	PACSTRAP_PACKAGES+=" wget libnewt btrfs-progs neovim"
-
-	# Instalamos los paquetes del grupo base-devel manualmente para luego
-	# poder borrar sudo facilmente. (Si en su lugar instalamos el grupo,
-	# luego será más complicado desinstalarlo)
-	PACSTRAP_PACKAGES+=" autoconf automake bison debugedit fakeroot flex"
-	PACSTRAP_PACKAGES+=" gc gcc groff guile libisl libmpc libtool m4 make"
-	PACSTRAP_PACKAGES+=" patch pkgconf texinfo which"
+	PACSTRAP_PACKAGES+=" wget libnewt btrfs-progs neovim base-devel"
 
 	PACSTRAP_PACKAGES+=" linux-headers libjpeg-turbo wpa_supplicant usbutils"
 	PACSTRAP_PACKAGES+=" networkmanager dosfstools git cronie cups freetype2"
@@ -244,7 +237,7 @@ pacstrap_install() {
 
 	# shellcheck disable=SC2086
 	while true; do
-		pacstrap /mnt $BASESTRAP_PACKAGES && break
+		pacstrap /mnt $PACSTRAP_PACKAGES && break
 	done
 }
 
