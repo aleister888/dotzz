@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# Script para instalar/desinstalar Ryujinx
+
+INSTALL_DIR="$HOME/.local/opt/Ryujinx"
+RUN_SCRIPT="$HOME/.local/bin/ryujinx"
+
+install() {
+	local REPO REPLY DOWNLOAD_URL FILENAME TAR_LOCATION
+	REPO="Ryubing/Canary-Releases"
+	REPLY="$(curl -s "https://api.github.com/repos/$REPO/releases/latest")"
+	DOWNLOAD_URL="$(echo "$REPLY" | jq -r '.assets[] | select(.name | test(".*linux_x64.*\\.tar\\.gz$")) | .browser_download_url')"
+	FILENAME="$(basename "$DOWNLOAD_URL")"
+	TAR_LOCATION="/tmp/$FILENAME"
+
+	# Descargar y descomprimir el archivo
+	curl -L "$DOWNLOAD_URL" -o "$TAR_LOCATION" || exit
+	tar -xzf "$TAR_LOCATION" -C /tmp
+
+	# Instalarlo en $HOME
+	mkdir -p "$(dirname "$INSTALL_DIR")"
+	mv /tmp/publish "$INSTALL_DIR"
+
+	# Crear script de inicio
+	cat <<-EOF >"$RUN_SCRIPT"
+		#!/bin/sh
+		$INSTALL_DIR/Ryujinx.sh
+	EOF
+	chmod +x "$RUN_SCRIPT"
+}
+
+uninstall() {
+	rm -rf "$INSTALL_DIR"
+	rm -f "$RUN_SCRIPT"
+}
+
+clean() {
+	rm -rf "${XDG_CONFIG_HOME:-$HOME/.config}"/Ryujinx
+}
+
+help_msg() {
+	echo "Uso:" >&2
+	echo "  $(basename "$0") [--install/--uninstall/--clean]" >&2
+	exit 1
+}
+
+# Manejo de argumentos
+case "$1" in
+--install) install ;;
+--uninstall) uninstall ;;
+--clean) clean ;;
+*) help_msg ;;
+esac

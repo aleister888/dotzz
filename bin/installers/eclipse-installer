@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# Script para instalar/desinstalar Eclipse IDE
+
+INSTALL_DIR="$HOME/.local/opt/eclipse"
+RUN_SCRIPT="$HOME/.local/bin/eclipse"
+
+install() {
+	# Obtener el año y el mes actual
+	local YEAR MONTH URL FILENAME DOWNLOAD_URL TAR_LOCATION
+	YEAR=$(date +'%Y')
+	MONTH=$(date +'%m')
+
+	# Ajustar la versión de Eclipse según el mes actual
+	if [ "$MONTH" -ge 6 ]; then
+		# Si el mes es junio o posterior, usar la versión de junio de este año
+		RELEASE_MONTH="06"
+	else
+		# Si el mes es anterior a junio, usar la versión de diciembre del año anterior
+		RELEASE_MONTH="12"
+		YEAR=$((YEAR - 1)) # Restar 1 al año para obtener el año anterior
+	fi
+
+	# Definir URL y nombre del archivo
+	URL="https://www.eclipse.org/downloads/download.php"
+	FILENAME="eclipse-java-$YEAR-$RELEASE_MONTH-R-linux-gtk-x86_64.tar.gz"
+	DOWNLOAD_URL="$URL?file=/technology/epp/downloads/release/$YEAR-$RELEASE_MONTH/R/$FILENAME&r=1"
+	TAR_LOCATION="/tmp/$FILENAME"
+
+	# Descargar y descomprimir el archivo
+	curl -L "$DOWNLOAD_URL" -o "$TAR_LOCATION" || exit
+	tar -xzf "$TAR_LOCATION" -C /tmp
+
+	# Instalarlo en $HOME
+	mkdir -p "$(dirname "$INSTALL_DIR")"
+	mv /tmp/eclipse "$INSTALL_DIR"
+
+	# Configurar el workspace por defecto
+	sed -i 's|@user.home/eclipse-workspace|@user.home/.local/share/eclipse-workspace|' \
+		"$INSTALL_DIR/eclipse.ini"
+
+	# Crear script de inicio
+	cat <<-EOF >"$RUN_SCRIPT"
+		#!/bin/sh
+		export GTK_THEME=Adwaita:dark
+		$INSTALL_DIR/eclipse
+		rm -rf $HOME/.p2
+	EOF
+	chmod +x "$RUN_SCRIPT"
+}
+
+uninstall() {
+	rm -rf "$INSTALL_DIR"
+	rm -f "$RUN_SCRIPT"
+}
+
+clean() {
+	rm -rf "${XDG_CACHE_HOME:-$HOME/.cache}"/Eclipse
+	rm -rf "${XDG_DATA_HOME:-$HOME/.local/share}"/Eclipse
+	rm -rf "${XDG_DATA_HOME:-$HOME/.local/share}"/eclipse-workspace
+	rm -rf ~/.m2
+}
+
+help_msg() {
+	echo "Uso:" >&2
+	echo "  $(basename "$0") [--install/--uninstall/--clean]" >&2
+	exit 1
+}
+
+# Manejo de argumentos
+case "$1" in
+--install) install ;;
+--uninstall) uninstall ;;
+--clean) clean ;;
+*) help_msg ;;
+esac

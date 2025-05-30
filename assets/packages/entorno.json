@@ -1,0 +1,82 @@
+{
+  "general": [
+    "extra/j4-dmenu-desktop",
+    "fastfetch",
+    "feh",
+    "i3lock-fancy-rapid-git",
+    "mediainfo",
+    "tk",
+    "xmenu",
+    "yad",
+    "yt-dlp",
+    "zenity"
+  ],
+  "musica": [
+    "atomicparsley",
+    "glyr",
+    "python-eyed3"
+  ],
+  "servicios": [
+    "dunst",
+    "gnome-keyring",
+    "picom",
+    "polkit-gnome",
+    "redshift",
+    "unclutter",
+    "xautolock"
+  ],
+  "discos": [
+    "gnome-disk-utility",
+    "ntfs-3g",
+    "simple-mtpfs",
+    "udiskie",
+    "udisks2-btrfs"
+  ],
+  "funcionalidades": [
+    "desktop-file-utils",
+    "libqalculate",
+    "perl-file-mimeinfo",
+    "perl-image-exiftool",
+    "xdg-desktop-portal-gtk",
+    "xdg-user-dirs"
+  ],
+  "utilidades_cli": [
+    "bat",
+    "bc",
+    "cdrtools",
+    "chafa",
+    "csvkit",
+    "expac",
+    "eza",
+    "ffmpegthumbnailer",
+    "fzf",
+    "extra/gnuplot",
+    "odt2txt",
+    "pamixer",
+    "parallel",
+    "pdftk",
+    "playerctl",
+    "ripgrep",
+    "shellcheck-bin",
+    "stow",
+    "tree"
+  ],
+  "bandeja_sistema": [
+    "network-manager-applet",
+    "stalonetray"
+  ],
+  "aplicaciones_gui": [
+    "arandr",
+    "gcolor3",
+    "mpv",
+    "mpv-mpris",
+    "nitrogen",
+    "nsxiv",
+    "qalculate-gtk",
+    "sxiv"
+  ],
+  "aplicaciones_tui": [
+    "htop",
+    "pulsemixer"
+  ]
+}

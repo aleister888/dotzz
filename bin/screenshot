@@ -1,0 +1,50 @@
+#!/bin/sh
+
+# Script para tomar capturas de pantalla
+
+dunstctl close-all
+
+NAME="$(date +"%Y-%m-%d_%H-%M-%S").jpg"
+SCRENDIR="$HOME/Imágenes/Screenshots"
+FILE="$SCRENDIR/$NAME"
+TMP="/tmp/screenshot.jpg"
+SOUND="/usr/share/sounds/freedesktop/stereo/camera-shutter.oga"
+
+mkdir -p "$SCRENDIR"
+
+capture() {
+	MODE=$1
+	DESTINATION=$2
+
+	# Captura de pantalla
+	if [ "$MODE" = "all" ]; then
+		import -window root "$DESTINATION"
+	else
+		import "$DESTINATION"
+	fi
+
+	# Si se copia al portapapeles
+	if [ "$DESTINATION" = "$TMP" ]; then
+		xclip -selection clipboard -t image/png -i "$TMP"
+		notify-send -i "$TMP" 'Captura copiada al Portapapeles'
+		rm "$TMP"
+	else
+		notify-send -i "$FILE" "$NAME"
+	fi
+
+	# Reproducir sonido
+	pw-play "$SOUND"
+}
+
+# Cerramos unclutter antes de tomar la captura
+pkill unclutter
+
+case "$1" in
+all_clip) capture all "$TMP" ;;
+selection_clip) capture selection "$TMP" ;;
+all_save) capture all "$FILE" ;;
+selection_save) capture selection "$FILE" ;;
+esac
+
+# Ejecutamos unclutter tras tomar la captura
+exec unclutter --start-hidden --timeout 2
