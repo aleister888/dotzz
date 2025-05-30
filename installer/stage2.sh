@@ -68,7 +68,7 @@ hostname_config() {
 	EOF
 }
 
-# Activar repositorios de Arch Linux
+# Configurar repositorios
 repos_conf() {
 	# Activar multilib
 	sed -i '/#\[multilib\]/{s/^#//;n;s/^.//}' /etc/pacman.conf && pacman -Sy
@@ -81,6 +81,23 @@ repos_conf() {
 		--connection-timeout 1 --download-timeout 1 \
 		--threads "$(nproc)" \
 		--save /etc/pacman.d/mirrorlist
+
+	# Añadir chaotic AUR
+	sudo pacman-key --recv-key 3056513887B78AEB \
+		--keyserver keyserver.ubuntu.com
+	sudo pacman-key --lsign-key 3056513887B78AEB
+
+	sudo pacman -U \
+		'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
+	sudo pacman -U \
+		'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
+
+	cat <<-EOF | tee -a /etc/pacman.conf
+		[chaotic-aur]
+		Include = /etc/pacman.d/chaotic-mirrorlist
+	EOF
+
+	sudo pacman -Sy
 
 	# Configurar cronie para actualizar automáticamente los mirrors de Arch
 	cat <<-EOF >/etc/crontab
