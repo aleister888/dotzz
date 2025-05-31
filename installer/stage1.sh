@@ -274,9 +274,8 @@ kb_layout_conf() {
 		EndSection
 	EOF
 	# Si elegimos español, configurar el layout de la tty en español también
-	# TODO
-	#[ "$FINAL_LAYOUT" == "es" ] &&
-	#	sed -i 's|keymap="us"|keymap="es"|' /etc/conf.d/keymaps
+	[ "$FINAL_LAYOUT" == "es" ] &&
+		echo "KEYMAP=es" | sudo tee -a /etc/vconsole.conf
 }
 
 # Calcular el DPI
