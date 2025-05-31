@@ -1,6 +1,6 @@
 <img src="https://archlinux.org/static/logos/archlinux-logo-dark-90dpi.png" align="left" height="90px" hspace="10px" vspace="0px">
 
-### dotzz
+### Arch Linux dotfiles
 
 ---
 
@@ -28,8 +28,7 @@ bash <(curl https://raw.githubusercontent.com/aleister888/dotzz/main/install.sh)
 
 #### Características
 
-- **Encriptación**: `/` y `/home` encriptados; `/boot` no encriptado.
-- Soporte para **btrfs** y **ext4**
+- **LUKS y LVM**: `swap` y `/` encriptados (`/boot` sin encriptar)
 - Compatible solo con **UEFI**.
 - Configuración automática de `Xorg` y `eww` basada en el DPI y la resolución.
 - Entorno limpio y organizado según el estándar [XDG Base Directory](https://wiki.archlinux.org/title/XDG_Base_Directory).
