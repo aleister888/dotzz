@@ -2,7 +2,7 @@
 
 set -e
 
-export REPO_NAME="dotzzz"
+export REPO_NAME="arch-installer"
 export REPO_URL="https://github.com/aleister888/$REPO_NAME"
 REPO_DIR="/tmp/$REPO_NAME"
 

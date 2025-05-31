@@ -63,6 +63,6 @@ setopt promptsubst
 
 printf '\033[?1h\033=' >/dev/tty
 
-fastfetch -c screenfetch -l artix2_small
+fastfetch -c screenfetch
 
 source "$HOME/.profile"
